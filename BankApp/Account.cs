@@ -4,12 +4,22 @@ using System.Text;
 
 namespace BankApp
 {
+
+    enum TypeOfAccounts
+    {
+        Checking,
+        Savings,
+        CD,
+        Loan
+    }
     /// <summary>
     /// This class represents a bank account
     /// where you can deposit or withdraw money from
     /// </summary>
     class Account
     {
+        private static int lastAccountNumber = 0;
+
         #region Properties
         /// <summary>
         /// Account number for the bank account
@@ -18,8 +28,8 @@ namespace BankApp
         public string AccountName { get; set; }
 
         public decimal Balance { get; private set; }
-        public string AccountType { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public TypeOfAccounts AccountType { get; set; }
+        public DateTime CreatedDate { get; private set; }
 
         public string EmailAddress { get; set; }
         #endregion
@@ -49,5 +59,17 @@ namespace BankApp
 
         #endregion
 
+        #region Constructor
+        //Default constructor
+        public Account()
+        {
+            //lastAccountNumber ++;
+            //AccountNumber = lastAccountNumber;
+
+            AccountNumber = ++lastAccountNumber;
+            CreatedDate = DateTime.UtcNow;
+        }
+
+        #endregion
     }
 }
