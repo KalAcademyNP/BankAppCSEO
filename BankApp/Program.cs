@@ -6,21 +6,43 @@ namespace BankApp
     {
         static void Main(string[] args)
         {
-            var myAccount = new Account();
-            myAccount.AccountName = "My checking";
-            myAccount.AccountType = TypeOfAccounts.Checking;
-            myAccount.Deposit(1000);
-            Console.WriteLine($"AN: {myAccount.AccountNumber}, Accountname: {myAccount.AccountName}, B: {myAccount.Balance:C}, CD: {myAccount.CreatedDate}, AT: {myAccount.AccountType}");
 
+            Console.WriteLine("******************************************");
+            Console.WriteLine("Welcome to my bank!");
+            Console.WriteLine("******************************************");
+            Console.WriteLine("0. Exit");
+            Console.WriteLine("1. Create an account");
+            Console.WriteLine("2. Deposit");
+            Console.WriteLine("3. Withdraw");
+            Console.WriteLine("4. Print all accounts");
+            Console.WriteLine("5. Print all transactions");
 
-            var myAccount2 = new Account();
-            myAccount2.AccountName = "My Savings";
-            myAccount2.AccountType = TypeOfAccounts.Savings;
-            Console.WriteLine($"AN: {myAccount2.AccountNumber}, Accountname: {myAccount2.AccountName}, B: {myAccount2.Balance:C}, CD: {myAccount2.CreatedDate}, AT: {myAccount2.AccountType}");
+            Console.Write("Please select an option: ");
+            var option = Console.ReadLine();
+            switch (option)
+            {
+                case "0": 
+                        Console.WriteLine("Thank you for visiting the bank!");
+                        return;
+                case "1":
+                    Console.Write("Account name: ");
+                    var accountName = Console.ReadLine();
+                    Console.Write("Email Address: ");
+                    var emailAddress = Console.ReadLine();
+                    Console.Write("Initial amount to deposit: ");
+                    var amount = Convert.ToDecimal(Console.ReadLine());
+                    var myAccount = Bank.CreateAccount(accountName, emailAddress);
+                    Console.WriteLine($"AN: {myAccount.AccountNumber}, Accountname: {myAccount.AccountName}, B: {myAccount.Balance:C}, CD: {myAccount.CreatedDate}, AT: {myAccount.AccountType}");
 
-            var myAccount3 = new Account();
-            myAccount3.AccountName = "My Savings";
-            Console.WriteLine($"AN: {myAccount3.AccountNumber}, Accountname: {myAccount3.AccountName}, B: {myAccount3.Balance:C}, CD: {myAccount3.CreatedDate}, AT: {myAccount3.AccountType}");
+                    break;
+                case "2":
+                case "3":
+                case "4":
+                case "5":
+                default:
+                    Console.WriteLine("Invalid option - try again!");
+                    break;
+            }
 
         }
 
