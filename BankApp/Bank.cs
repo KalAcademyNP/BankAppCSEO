@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BankApp
 {
     static class Bank
     {
+        private static List<Account> accounts = new List<Account>();
         /// <summary>
         /// Create a bank account
         /// </summary>
@@ -28,7 +30,15 @@ namespace BankApp
                 account.Deposit(initialDeposit);
             }
 
+            accounts.Add(account);
             return account;
         }
+
+
+        public static IEnumerable<Account> GetAccountsByEmailAddress(string emailAddress)
+        {
+            return accounts.Where(a => a.EmailAddress == emailAddress);
+        }
+
     }
 }
