@@ -8,6 +8,8 @@ namespace BankApp
     static class Bank
     {
         private static List<Account> accounts = new List<Account>();
+        private static List<Transaction> transactions = new List<Transaction>();
+
         /// <summary>
         /// Create a bank account
         /// </summary>
@@ -25,12 +27,14 @@ namespace BankApp
                 AccountType = accountType
             };
 
+            accounts.Add(account);
+
             if (initialDeposit > 0)
             {
-                account.Deposit(initialDeposit);
+                Deposit(account.AccountNumber, initialDeposit);
             }
 
-            accounts.Add(account);
+
             return account;
         }
 
@@ -38,6 +42,55 @@ namespace BankApp
         public static IEnumerable<Account> GetAccountsByEmailAddress(string emailAddress)
         {
             return accounts.Where(a => a.EmailAddress == emailAddress);
+        }
+
+        public static void Deposit(int accountNumber, decimal amount)
+        {
+            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            if (account == null)
+            {
+                //throw exception
+                return;
+            }
+
+            account.Deposit(amount);
+            var transaction = new Transaction
+            {
+                TransactionDate = DateTime.UtcNow,
+                TransactionType = TypeOfTransactions.Credit,
+                Description = "Bank Deposit",
+                Amount = amount,
+                AccountNumber = accountNumber
+            };
+
+            transactions.Add(transaction);
+        }
+
+        public static void Withdraw(int accountNumber, decimal amount)
+        {
+            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            if (account == null)
+            {
+                //throw exception
+                return;
+            }
+
+            account.Withdraw(amount);
+            var transaction = new Transaction
+            {
+                TransactionDate = DateTime.UtcNow,
+                TransactionType = TypeOfTransactions.Debit,
+                Description = "Bank Withdrawal",
+                Amount = amount,
+                AccountNumber = accountNumber
+            };
+
+            transactions.Add(transaction);
+        }
+
+        public static IEnumerable<Transaction> GetTransactionsByAccountNumber(int accountNumber)
+        {
+            return transactions.Where(t => t.AccountNumber == accountNumber).OrderByDescending(t =>t.TransactionDate);
         }
 
     }

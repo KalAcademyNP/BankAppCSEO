@@ -49,11 +49,37 @@ namespace BankApp
 
                         break;
                     case "2":
+                        PrintAllAccounts();
+                        Console.Write("Account Number: ");
+                        var accountNumber = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Amount to deposit: ");
+                        var depositAmount = Convert.ToDecimal(Console.ReadLine());
+                        Bank.Deposit(accountNumber, depositAmount);
+                        Console.WriteLine("Deposit completed successfully!");
+                        break;
+
                     case "3":
+                        PrintAllAccounts();
+                        Console.Write("Account Number: ");
+                        accountNumber = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Amount to withdraw: ");
+                        var withdrawalAmount = Convert.ToDecimal(Console.ReadLine());
+                        Bank.Withdraw(accountNumber, withdrawalAmount);
+                        Console.WriteLine("Withdrawal completed successfully!");
+                        break;
                     case "4":
                         PrintAllAccounts();
                         break;
                     case "5":
+                        PrintAllAccounts();
+                        Console.Write("Account Number: ");
+                        accountNumber = Convert.ToInt32(Console.ReadLine());
+                        var transactions = Bank.GetTransactionsByAccountNumber(accountNumber);
+                        foreach (var transaction in transactions)
+                        {
+                            Console.WriteLine($"TT: {transaction.TransactionType}, TD: {transaction.TransactionDate}, TA: {transaction.Amount}, AN: {transaction.AccountNumber}, D: {transaction.Description}");
+                        }
+                        break;
                     default:
                         Console.WriteLine("Invalid option - try again!");
                         break;
