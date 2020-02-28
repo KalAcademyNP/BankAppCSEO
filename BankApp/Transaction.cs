@@ -20,6 +20,7 @@ namespace BankApp
         public string Description { get; set; }
 
         public int AccountNumber { get; set; }
+        public Account Account { get; set; }
 
     }
 }

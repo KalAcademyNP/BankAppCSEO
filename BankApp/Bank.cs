@@ -7,9 +7,7 @@ namespace BankApp
 {
     static class Bank
     {
-        private static List<Account> accounts = new List<Account>();
-        private static List<Transaction> transactions = new List<Transaction>();
-
+        private static BankContext db = new BankContext();
         /// <summary>
         /// Create a bank account
         /// </summary>
@@ -27,7 +25,8 @@ namespace BankApp
                 AccountType = accountType
             };
 
-            accounts.Add(account);
+            db.Accounts.Add(account);
+            db.SaveChanges();
 
             if (initialDeposit > 0)
             {
@@ -41,12 +40,12 @@ namespace BankApp
 
         public static IEnumerable<Account> GetAccountsByEmailAddress(string emailAddress)
         {
-            return accounts.Where(a => a.EmailAddress == emailAddress);
+            return db.Accounts.Where(a => a.EmailAddress == emailAddress);
         }
 
         public static void Deposit(int accountNumber, decimal amount)
         {
-            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            var account = db.Accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
             if (account == null)
             {
                 //throw exception
@@ -63,12 +62,13 @@ namespace BankApp
                 AccountNumber = accountNumber
             };
 
-            transactions.Add(transaction);
+            db.Transactions.Add(transaction);
+            db.SaveChanges();
         }
 
         public static void Withdraw(int accountNumber, decimal amount)
         {
-            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            var account = db.Accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
             if (account == null)
             {
                 //throw exception
@@ -85,12 +85,13 @@ namespace BankApp
                 AccountNumber = accountNumber
             };
 
-            transactions.Add(transaction);
+            db.Transactions.Add(transaction);
+            db.SaveChanges();
         }
 
         public static IEnumerable<Transaction> GetTransactionsByAccountNumber(int accountNumber)
         {
-            return transactions.Where(t => t.AccountNumber == accountNumber).OrderByDescending(t =>t.TransactionDate);
+            return db.Transactions.Where(t => t.AccountNumber == accountNumber).OrderByDescending(t =>t.TransactionDate);
         }
 
     }
