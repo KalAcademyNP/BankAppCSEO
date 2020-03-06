@@ -28,24 +28,55 @@ namespace BankApp
                         Console.WriteLine("Thank you for visiting the bank!");
                         return;
                     case "1":
-                        Console.Write("Account name: ");
-                        var accountName = Console.ReadLine();
-                        Console.Write("Email Address: ");
-                        var emailAddress = Console.ReadLine();
-                        Console.Write("Initial amount to deposit: ");
-                        var amount = Convert.ToDecimal(Console.ReadLine());
-
-                        Console.WriteLine("Account type: ");
-                        var accountTypes = Enum.GetNames(typeof(TypeOfAccounts));
-                        for (int i = 0; i < accountTypes.Length; i++)
+                        try
                         {
-                            Console.WriteLine($"{i}. {accountTypes[i]}");
-                        }
-                        Console.Write("Select an option: ");
-                        var accountType = Enum.Parse<TypeOfAccounts>(Console.ReadLine());
+                            Console.Write("Account name: ");
+                            var accountName = Console.ReadLine();
+                            //if (string.IsNullOrEmpty(accountName))
+                            //{
+                            //    //raising/throwing
+                            //    throw new ArgumentNullException("accountName", "Account name is required!");
+                            //}
+                            Console.Write("Email Address: ");
+                            var emailAddress = Console.ReadLine();
+                            //if (string.IsNullOrEmpty(emailAddress))
+                            //{
+                            //    //raising/throwing
+                            //    throw new ArgumentNullException("Email Address", "Email Address is required!");
+                            //}
 
-                        var myAccount = Bank.CreateAccount(accountName, emailAddress, accountType, amount);
-                        Console.WriteLine($"AN: {myAccount.AccountNumber}, email Address: {myAccount.EmailAddress}, Accountname: {myAccount.AccountName}, B: {myAccount.Balance:C}, CD: {myAccount.CreatedDate}, AT: {myAccount.AccountType}");
+                            Console.Write("Initial amount to deposit: ");
+                            var amount = Convert.ToDecimal(Console.ReadLine());
+
+                            Console.WriteLine("Account type: ");
+                            var accountTypes = Enum.GetNames(typeof(TypeOfAccounts));
+                            for (int i = 0; i < accountTypes.Length; i++)
+                            {
+                                Console.WriteLine($"{i}. {accountTypes[i]}");
+                            }
+                            Console.Write("Select an option: ");
+                            var accountType = Enum.Parse<TypeOfAccounts>(Console.ReadLine());
+
+                            var myAccount = Bank.CreateAccount(accountName, emailAddress, accountType, amount);
+                            Console.WriteLine($"AN: {myAccount.AccountNumber}, email Address: {myAccount.EmailAddress}, Accountname: {myAccount.AccountName}, B: {myAccount.Balance:C}, CD: {myAccount.CreatedDate}, AT: {myAccount.AccountType}");
+                        }
+                        catch (ArgumentNullException ax)
+                        {
+                            Console.WriteLine($"Error - {ax.Message}");
+                        }
+                        catch (ArgumentException ax)
+                        {
+                            Console.WriteLine($"Error - {ax.Message}");
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("Amount is required!");
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Something went wrong! Please try again!");
+                        }
+
 
                         break;
                     case "2":

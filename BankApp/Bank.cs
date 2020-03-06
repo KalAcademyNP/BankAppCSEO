@@ -16,8 +16,14 @@ namespace BankApp
         /// <param name="accountType">Type of account</param>
         /// <param name="initialDeposit">Initial amount to deposit</param>
         /// <returns>Newly created account</returns>
+        /// <exception cref="ArgumentException" />
+        /// <exception cref="ArgumentNullException" />
         public static Account CreateAccount(string accountName, string emailAddress, TypeOfAccounts accountType=TypeOfAccounts.Checking, decimal initialDeposit=0)
         {
+            if(string.IsNullOrEmpty(accountName) || string.IsNullOrEmpty(emailAddress))
+            {
+                throw new ArgumentException("Account name and Email Address is required!");
+            }
             var account = new Account
             {
                 AccountName = accountName,
