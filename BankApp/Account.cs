@@ -5,7 +5,7 @@ using System.Text;
 namespace BankApp
 {
 
-    enum TypeOfAccounts
+    public enum TypeOfAccounts
     {
         Checking,
         Savings,
@@ -16,7 +16,7 @@ namespace BankApp
     /// This class represents a bank account
     /// where you can deposit or withdraw money from
     /// </summary>
-    class Account
+    public class Account
     {
 
         #region Properties

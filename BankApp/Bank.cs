@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BankApp
 {
-    static class Bank
+    public static class Bank
     {
         private static BankContext db = new BankContext();
         /// <summary>
@@ -98,6 +98,11 @@ namespace BankApp
         public static IEnumerable<Transaction> GetTransactionsByAccountNumber(int accountNumber)
         {
             return db.Transactions.Where(t => t.AccountNumber == accountNumber).OrderByDescending(t =>t.TransactionDate);
+        }
+
+        public static Account GetAccountByAccountNumber(int accountNumber)
+        {
+            return db.Accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
         }
 
     }

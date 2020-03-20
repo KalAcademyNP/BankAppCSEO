@@ -6,11 +6,19 @@ using System.Text;
 
 namespace BankApp
 {
-    class BankContext : DbContext
+    public class BankContext : DbContext
     {
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
 
+        public BankContext()
+        {
+
+        }
+        public BankContext(DbContextOptions<BankContext> options) : base(options)
+        {
+
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BankDb;Integrated Security=True;Connect Timeout=30;");
