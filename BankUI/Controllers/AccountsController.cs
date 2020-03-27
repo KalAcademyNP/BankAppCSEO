@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BankApp;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BankUI.Controllers
 {
+   [Authorize]
     public class AccountsController : Controller
     {
         private readonly BankContext _context;
@@ -21,7 +23,7 @@ namespace BankUI.Controllers
         // GET: Accounts
         public IActionResult Index()
         {
-            return View(Bank.GetAccountsByEmailAddress("test@test.com"));
+            return View(Bank.GetAccountsByEmailAddress(HttpContext.User.Identity.Name));
         }
 
         // GET: Accounts/Details/5
